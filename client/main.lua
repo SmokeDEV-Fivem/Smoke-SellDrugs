@@ -196,6 +196,14 @@ local function VendreDrogue(ped)
         return
     end
 
+    -- Vérifier d'abord s'il y a assez de policiers
+    TriggerServerEvent('smoke-selldrugs:checkCops', ped, NetworkGetNetworkIdFromEntity(ped))
+end
+
+RegisterNetEvent('smoke-selldrugs:continueVente')
+AddEventHandler('smoke-selldrugs:continueVente', function(pedNetId)
+    local ped = NetworkGetEntityFromNetworkId(pedNetId)
+    
     if math.random(100) > Config.ChanceReussite then
         MarkPedAsUsed(ped)
         
@@ -210,6 +218,7 @@ local function VendreDrogue(ped)
 
     MarkPedAsUsed(ped)
 
+    local drogue = HasDrugs()
     local price = GetRandomPrice(drogue)
     local quantity = GetRandomQuantity()
     price = price * quantity
@@ -222,7 +231,7 @@ local function VendreDrogue(ped)
     SetTimeout(Config.CooldownVente * 1000, function()
         cooldown = false
     end)
-end
+end)
 
 exports.ox_target:addGlobalPed({
     {
