@@ -1,5 +1,8 @@
 Config = {}
 
+-- Nombre minimum de policiers requis pour vendre de la drogue
+Config.MinimumCops = 1
+
 -- Configuration des zones de vente de drogue
 Config.Zones = {
     {
